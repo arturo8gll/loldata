@@ -1,0 +1,40 @@
+{
+  "name": "loldata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
+    "cli-spinner": "^0.2.10",
+    "delay": "^4.3.0",
+    "json2csv": "^4.5.2",
+    "lodash": "^4.17.15",
+    "log-symbols": "^3.0.0",
+    "regenerator-runtime": "^0.13.3",
+    "standard": "^14.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node src/index.js",
+    "build": "babel src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arturo8gll/loldata.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arturo8gll/loldata/issues"
+  },
+  "homepage": "https://github.com/arturo8gll/loldata#readme"
+}
