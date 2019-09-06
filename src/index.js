@@ -3,7 +3,7 @@ import { getListMatches } from './controller/matchlists'
 import { getMatchesInfo } from './controller/match'
 import { clean } from './controller/cleaning'
 
-info('NYM TRMIKO')
+info('puma99')
   .then(res => {
     return getListMatches()
   })
