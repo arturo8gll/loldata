@@ -2,11 +2,8 @@ import { Parser } from 'json2csv'
 import fs from 'fs'
 import { omit, merge, find, forEach, pick } from 'lodash'
 import logSymbols from 'log-symbols'
-import { promisify } from 'util'
 
-const writeFile = promisify(fs.writeFile)
-const user = JSON.parse(fs.readFileSync('./auth/user.json'))
-var matches = JSON.parse(fs.readFileSync('data/json/matchs.json'))
+
 
 function renameObject (data) {
   forEach(Object.keys(data), value => {
@@ -19,8 +16,11 @@ function renameObject (data) {
 }
 
 function cleanMatch (match) {
+  const user = JSON.parse(fs.readFileSync('./auth/user.json'))
+  if(match == null) return false
+  
   const infoMatch = omit(match, ['teams', 'participants', 'participantIdentities'])
-  const player = find(match.participantIdentities, o => o.player.summonerName === user.name)
+  const player = find(match.participantIdentities, o => o.player.accountId === user.accountId)
   const teams = omit(player.participantId <= 4 ? match.teams[0] : match.teams[1], ['bans'])
   const participant = omit(match.participants[player.participantId - 1], ['stats', 'timeline', 'masteries', 'runes'])
   const stats = match.participants[player.participantId - 1].stats
@@ -34,9 +34,13 @@ function cleanMatch (match) {
   return merge(infoMatch, teams, participant, stats, final, infoTimeLine)
 }
 export function clean () {
+  const matches = JSON.parse(fs.readFileSync('data/json/matchs.json'))
   var db = []
   forEach(matches, (value, index) => {
-    db.push(cleanMatch(value))
+    console.log(index)
+    let data = cleanMatch(value)
+    if(data == false) return
+    db.push(data)
   })
   console.log(logSymbols.success, 'Matchs Trasnasformed!')
   // console.log(db[0])
@@ -45,7 +49,7 @@ export function clean () {
   try {
     const parser = new Parser(opts)
     const csv = parser.parse(db)
-    writeFile('data/csv/data.csv', csv)
+    fs.writeFileSync('data/csv/data.csv', csv)
     console.log(logSymbols.success, 'Matchs saved to CSV!')
   } catch (err) {
     console.error(err)

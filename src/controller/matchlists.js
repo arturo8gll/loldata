@@ -1,13 +1,10 @@
 import axios from 'axios'
 import fs from 'fs'
 import logSymbols from 'log-symbols'
-import { promisify } from 'util'
 
-const writeFile = promisify(fs.writeFile)
-const data = JSON.parse(fs.readFileSync('./auth/token.json'))
-const user = JSON.parse(fs.readFileSync('./auth/user.json'))
-console.log(`${user.name} search games`)
 function dataMatches (index) {
+  const data = JSON.parse(fs.readFileSync('./auth/token.json'))
+  const user = JSON.parse(fs.readFileSync('./auth/user.json'))
   return axios.get(`https://la1.api.riotgames.com/lol/match/v4/matchlists/by-account/${user.accountId}?beginIndex=${index}&queue=420`, {
     headers: {
       'X-Riot-Token': data.token
@@ -35,6 +32,6 @@ export async function getListMatches () {
     }
   }
   await console.log(logSymbols.info, `Games found ${count}`)
-  await writeFile('data/json/matcheslist.json', JSON.stringify(data))
+  fs.writeFileSync('data/json/matcheslist.json', JSON.stringify(data))
   console.log(logSymbols.success, 'Matchs info Saved!')
 }

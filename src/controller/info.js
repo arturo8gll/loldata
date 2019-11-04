@@ -11,10 +11,7 @@ export async function info (user) {
     }
   })
     .then(response => {
-      fs.writeFile('./auth/user.json', JSON.stringify(response.data), function (err) {
-        if (err) throw err
-        console.log(logSymbols.success, 'User info Saved!')
-      })
+      fs.writeFileSync('./auth/user.json', JSON.stringify(response.data))
     })
     .catch(err => {
       throw err

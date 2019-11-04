@@ -12,6 +12,7 @@
     "json2csv": "^4.5.2",
     "lodash": "^4.17.15",
     "log-symbols": "^3.0.0",
+    "python-shell": "^1.0.8",
     "regenerator-runtime": "^0.13.3",
     "standard": "^14.1.0"
   },
