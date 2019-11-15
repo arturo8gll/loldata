@@ -3,8 +3,6 @@ import fs from 'fs'
 import { omit, merge, find, forEach, pick } from 'lodash'
 import logSymbols from 'log-symbols'
 
-
-
 function renameObject (data) {
   forEach(Object.keys(data), value => {
     forEach(Object.keys(data[value]), data2 => {
@@ -17,10 +15,10 @@ function renameObject (data) {
 
 function cleanMatch (match) {
   const user = JSON.parse(fs.readFileSync('./auth/user.json'))
-  if(match == null) return false
-  
+  if (match == null) return false
   const infoMatch = omit(match, ['teams', 'participants', 'participantIdentities'])
-  const player = find(match.participantIdentities, o => o.player.accountId === user.accountId)
+  const player = find(match.participantIdentities, o => o.player.currentAccountId === user.accountId)
+  console.log(match.participantIdentities)
   const teams = omit(player.participantId <= 4 ? match.teams[0] : match.teams[1], ['bans'])
   const participant = omit(match.participants[player.participantId - 1], ['stats', 'timeline', 'masteries', 'runes'])
   const stats = match.participants[player.participantId - 1].stats
@@ -38,8 +36,8 @@ export function clean () {
   var db = []
   forEach(matches, (value, index) => {
     console.log(index)
-    let data = cleanMatch(value)
-    if(data == false) return
+    const data = cleanMatch(value)
+    if (data === false) return
     db.push(data)
   })
   console.log(logSymbols.success, 'Matchs Trasnasformed!')
