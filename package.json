@@ -10,7 +10,7 @@
     "cli-spinner": "^0.2.10",
     "delay": "^4.3.0",
     "json2csv": "^4.5.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "log-symbols": "^3.0.0",
     "python-shell": "^1.0.8",
     "regenerator-runtime": "^0.13.3",
